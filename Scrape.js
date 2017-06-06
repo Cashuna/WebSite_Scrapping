@@ -21,7 +21,11 @@ function getLink (info){
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
-
+if(process.env.MONGODB_URI){
+    mongoose.connect(process.env.MONGODB_URI);
+} else{
+    mongoose.connect("mongodb://localhost/searchdb");
+}
 
 // Initialize Express
 var app = express();
@@ -48,8 +52,6 @@ db.on("error", function(error) {
 db.once("open", function() {
     console.log("Mongoose connection successful.");
 });
-
-
 
 
 //============================================Routes===================================
